@@ -122,7 +122,7 @@ public class Vuelo implements Comparable<Vuelo>{
 		return num_plazas == num_pasajeros;
 	}
 	public Double getPorcentajeOcupacion() {
-		return Double.valueOf(num_pasajeros)/num_plazas;
+		return Double.valueOf(num_pasajeros)/Double.valueOf(num_plazas);
 	}
 	public void incrementaPrecioPorcentaje(Double porcentaje) {
 		precio = precio*(1 + porcentaje);
@@ -130,7 +130,7 @@ public class Vuelo implements Comparable<Vuelo>{
 	
 @Override
 	public String toString() {
-		return trayecto.toString() + ", " + codigo + ", " + fecha.format(DateTimeFormatter.ofPattern("d/M/y")); 
+		return "Vuelo "+ "["+"Trayecto= "+ trayecto.toString() + ", " +"codigo=" +codigo + ", " +"fecha=" +  fecha + "]"; 
 	}
 @Override
 	public int compareTo(Vuelo v) {

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Vuelos {
 	private String nombre;
-	private List<Vuelo> vuelos;
+	protected List<Vuelo> vuelos;
 	
 	public Vuelos(String nombre, List<Vuelo> vuelos) {
 		this.nombre = nombre;

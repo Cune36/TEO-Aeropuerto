@@ -1,5 +1,6 @@
 package fp.vuelos;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FactoriaVuelos {
 
@@ -21,9 +23,9 @@ public class FactoriaVuelos {
 		LocalDate fecha = LocalDate.parse(res[6].strip(), DateTimeFormatter.ofPattern("d/M/y"));
 		Duration duracion = Duration.ofMinutes(Integer.valueOf(res[7].strip()));
 		List<String> tripulantes = new ArrayList<>();
-		//CORREGIR
-		for(int i = 8; i<res.length; i++) {
-			tripulantes.add(res[i].strip());
+		String[] array_tripulantes = res[8].split(",");
+		for(String x:array_tripulantes) {
+			tripulantes.add(x.strip());
 		}
 		Vuelo vuelo = new Vuelo(trayecto, precio, num_pasajeros, num_plazas,res[5].strip(), fecha, duracion,tripulantes);
 		return vuelo;
@@ -31,10 +33,15 @@ public class FactoriaVuelos {
 	
 	public static List<Vuelo> leeVuelos(String nomfich){
 		try {
-			
+			List<String> vuelos_string = Files.lines(Paths.get("./data/" + nomfich))
+										.collect(Collectors.toList());
+			return vuelos_string.subList(1, vuelos_string.size()).stream()
+					.map(s->parseaVuelo(s))
+					.collect(Collectors.toList());
 		}
-		catch(IllegalArgumentException e) {}
-		
+		catch(IOException e) {}
+			System.out.print("Skill issue");
+			return null;
 	}
 
 }
